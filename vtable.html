@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- このファイルではGNUのvtable.elパッケージを解説します。
+
+Copyright © 2022-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document under
+the terms of the GNU Free Documentation License, Version 1.3 or any later
+version published by the Free Software Foundation; with no Invariant
+Sections, with the Front-Cover Texts being "A GNU Manual," and with the
+Back-Cover Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and modify
+this GNU manual." -->
+<title>可変ピッチ表</title>
+
+<meta name="description" content="可変ピッチ表">
+<meta name="keywords" content="可変ピッチ表">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content=".texi2any-real">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="#Top" rel="start" title="Top">
+<link href="#g_t_7d22_5f15" rel="index" title="索引">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="#g_t_306f_3058_3081_306b" rel="next" title="はじめに">
+<style type="text/css">
+<!--
+/*
+   Custom CSS for HTML documents generated with Texinfo 7.x's makeinfo.
+   Public domain 2023 Luis Felipe López Acevedo. All rights waived.
+*/
+
+
+/* VARIABLES */
+
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter-printindex {text-decoration: none}
+div.center {text-align:center}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd.kbd {font-style: oblique}
+kbd.key {font-style: normal}
+pre.display-preformatted {font-family: inherit}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
+td.printindex-index-entry {vertical-align: top}
+td.printindex-index-section {vertical-align: top; padding-left: 1em}
+th.entries-header-printindex {text-align:left}
+th.sections-header-printindex {text-align:left; padding-left: 1em}
+ul.toc-numbered-mark {list-style: none}
+:root {
+    color-scheme: light dark;
+    /* Colors */
+    --bg-color: #F0F0F0;
+    --border-color: silver;
+    --link-color: #245C8A;
+    --sheet-color: white;
+    --sheet-shadow: gray;
+    --symbol-color: saddlebrown;
+    --text-color: #333;
+    /* Fonts */
+    --base-font-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #191919;
+        --border-color: black;
+        --link-color: #8EB2CD;
+        --sheet-color: #222;
+        --sheet-shadow: var(--border-color);
+        --symbol-color: darkkhaki;
+        --text-color: #F5F5F5;
+    }
+}
+/* END VARIABLES */
+
+
+
+/* NATIVE ELEMENTS */
+a:link,
+a:visited {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:active,
+a:focus,
+a:hover {
+    text-decoration: underline;
+}
+
+abbr,
+acronym {
+    cursor: help;
+}
+
+blockquote {
+    border-color: var(--text-color);
+    border-style: none none none solid;
+    border-width: 0.5em;
+    margin-left: 0em;
+    padding-left: 1.5em;
+}
+
+body {
+    background-color: var(--sheet-color);
+    box-shadow: 0 0 2px var(--sheet-shadow);
+    box-sizing: border-box;
+    color: var(--text-color);
+    font-family: sans-serif;
+    font-size: var(--base-font-size);
+    margin: 50px auto;
+    max-width: 960px;
+    padding: 50px;
+}
+
+code,
+samp,
+tt,
+var {
+    color: var(--symbol-color);
+}
+
+div.example,
+div.lisp {
+    margin: 0px;
+}
+
+dl {
+    margin: 3em 0em;
+}
+
+dl dl {
+    margin: 0em;
+}
+
+dt {
+    background-color: var(--bg-color);
+    padding: 0.5em;
+}
+
+dd dt {
+    background-color: transparent;
+    border-color: var(--border-color);
+    border-style: none none none dotted;
+    border-width: 0.5em;
+    padding: 0.5em;
+}
+
+h1,
+h2,
+h2.contents-heading,
+h3,
+h4 {
+    padding: 20px 0px 0px 0px;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 2.4em;
+}
+
+h2 {
+    font-size: 2.2em;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.8em;
+}
+
+h4 {
+    font-size: 1.4em;
+}
+
+hr {
+    background-color: var(--border-color);
+    border-style: none;
+    height: 1px;
+    margin: 0px;
+}
+
+html {
+    background-color: var(--bg-color);
+}
+
+img {
+    max-width: 100%;
+}
+
+li {
+    padding: 5px;
+}
+
+pre.display,
+pre.example-preformatted,
+pre.format,
+pre.lisp-preformatted,
+pre.verbatim{
+    overflow: auto;
+}
+
+pre.example-preformatted,
+pre.lisp-preformatted,
+pre.verbatim {
+    background-color: #2D3743;
+    border-color: black;
+    border-style: solid;
+    border-width: thin;
+    color: #E1E1E1;
+    font-size: smaller;
+    padding: 1em;
+}
+
+pre.menu-comment-preformatted {
+    border-color: var(--bg-color);
+    border-bottom-style: solid;
+    border-width: thin;
+    font-family: sans;
+}
+
+strong.def-name {
+    font-size: var(--base-font-size);
+}
+
+table {
+    border-collapse: collapse;
+    margin: 40px 0px;
+}
+
+table.cp-entries-printindex *,
+table.fn-entries-printindex *,
+table.ky-entries-printindex *,
+table.pg-entries-printindex *,
+table.tp-entries-printindex *,
+table.vr-entries-printindex * {
+    background-color: inherit;
+    border-style: none;
+}
+
+td,
+th {
+    border-color: var(--border-color);
+    border-style: solid;
+    border-width: thin;
+    padding: 10px;
+}
+
+th {
+    background-color: var(--bg-color);
+}
+/* END NATIVE ELEMENTS */
+
+
+
+/* CLASSES */
+.contents {
+    margin-bottom: 4em;
+}
+
+.def-type {
+    color: var(--text-color);
+}
+
+.def-var-arguments {
+    color: var(--text-color);
+}
+
+.float {
+    margin: 3em 0em;
+}
+
+.caption {
+    font-size: smaller;
+    text-align: center;
+}
+
+.float > img {
+    display: block;
+    margin: auto;
+}
+
+.footnote {
+    font-size: smaller;
+    margin: 5em 0em;
+}
+
+.footnote h3 {
+    display: inline;
+    font-size: small;
+}
+
+.key {
+    color: var(--symbol-color);
+}
+
+.menu * {
+    border-style: none;
+}
+
+.menu td {
+    padding: 0.5em 0em;
+}
+
+.menu td:last-child {
+    width: 60%;
+}
+
+.menu th {
+    background-color: inherit;
+}
+
+.nav-panel {
+    background-color: var(--bg-color);
+    font-size: small;
+    padding: 0.2em 1em;
+}
+/* END CLASSES */
+
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+
+
+
+
+
+
+<div class="top-level-extent" id="Top">
+<div class="nav-panel">
+<p>
+Next: <a href="#g_t_306f_3058_3081_306b" accesskey="n" rel="next">序と入門</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h1 class="top" id="vtable"><span>vtable<a class="copiable-link" href="#vtable"> &para;</a></span></h1>
+
+<p>このファイルではGNUのvtable.elパッケージを解説します。
+</p>
+<p>Copyright &copy; 2022&ndash;2025 Free Software Foundation, Inc.
+</p>
+<blockquote class="quotation">
+<p>Permission is granted to copy, distribute and/or modify this document under
+the terms of the GNU Free Documentation License, Version 1.3 or any later
+version published by the Free Software Foundation; with no Invariant
+Sections, with the Front-Cover Texts being &ldquo;A GNU Manual,&rdquo; and with the
+Back-Cover Texts as in (a) below.  A copy of the license is included in the
+section entitled &ldquo;GNU Free Documentation License.&rdquo;
+</p>
+<p>(a) The FSF&rsquo;s Back-Cover Text is: &ldquo;You have the freedom to copy and modify
+this GNU manual.&rdquo;
+</p></blockquote>
+
+
+<div class="element-contents" id="SEC_Contents">
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="toc-numbered-mark">
+  <li><a id="toc-Xu-toRu-Men-" href="#g_t_306f_3058_3081_306b">1 序と入門</a></li>
+  <li><a id="toc-Gai-Nian-" href="#g_t_6982_5ff5">2 概念</a></li>
+  <li><a id="toc-Zuo-Biao-" href="#g_t_4f5c_8868">3 作表</a></li>
+  <li><a id="toc-Ming-Ling-" href="#g_t_547d_4ee4">4 命令</a></li>
+  <li><a id="toc-intahuesuGuan-Shu-" href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">5 インターフェース関数</a></li>
+  <li><a id="toc-GNUZi-You-WenShu-Shi-Yong-Xu-Nuo-" href="#GNU_81ea_7531_6587_66f8_4f7f_7528_8a31_8afe">6 GNU自由文書使用許諾</a></li>
+  <li><a id="toc-Suo-Yin-" href="#g_t_7d22_5f15" rel="index">索引</a></li>
+</ul>
+</div>
+</div>
+<hr>
+<div class="chapter-level-extent" id="g_t_306f_3058_3081_306b">
+<div class="nav-panel">
+<p>
+Next: <a href="#g_t_6982_5ff5" accesskey="n" rel="next">概念</a>, Previous: <a href="#Top" accesskey="p" rel="prev">vtable</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="chapter" id="Xu-toRu-Men-"><span>1 序と入門<a class="copiable-link" href="#Xu-toRu-Men-"> &para;</a></span></h2>
+
+<p>Emacsで表データを表示するほとんどのモードで<code class="code">tabulated-list-mode</code>が使われていますが、制約があります。
+それはテキストが等幅で表示されるということで、フォントと画像を単一のリストに混在させることが難しくなっています。
+<em class="dfn">vtable</em>（「可変ピッチ表」；variable pitch tables）パッケージはこの点に取り組んでいます。
+</p>
+<p><code class="code">tabulated-list-mode</code>は主モードであって、バッファ全体を制御することが前提です。
+vtableはそうではありません。
+他のデータの途中にvtableがあっても、同じバッファに複数のvtableがあってもいいのです。
+</p>
+<p>以下はvtableで作れる一番単純なものです。
+</p>
+<div class="example lisp">
+<pre class="lisp-preformatted">(make-vtable
+ :objects '((&quot;Foo&quot; 1034)
+            (&quot;Gazonk&quot; 45)))
+</pre></div>
+
+<p>既定では、vtableは<code class="code">vtable</code>フェイスを使います（これは<code class="code">variable-pitch</code>フェイスを継承します）。
+また、数値データのみの列は右揃えにします（それ以外は左揃え）。
+</p>
+<p>普通は、列に名前を付けたいでしょう。
+</p>
+<div class="example lisp">
+<pre class="lisp-preformatted">(make-vtable
+ :columns '(&quot;Name&quot; &quot;ID&quot;)
+ :objects '((&quot;Foo&quot; 1034)
+            (&quot;Gazonk&quot; 45)))
+</pre></div>
+
+<p>列名をクリックすると各列（この例ではリスト中の要素に対応）のデータに基づいて表を整列します。
+</p>
+<p>既定では、データは「ありのままに」表示されます。
+つまり、&lsquo;<samp class="samp">(format &quot;%s&quot; ...)</samp>&rsquo;で表示されるような感じです。
+ただし上塗りはできます。
+</p>
+<div class="example lisp">
+<pre class="lisp-preformatted">(make-vtable
+ :columns '(&quot;Name&quot; &quot;ID&quot;)
+ :objects '((&quot;Foo&quot; 1034)
+            (&quot;Gazonk&quot; 45))
+ :formatter (lambda (value column &amp;rest _)
+              (if (= column 1)
+                  (file-size-human-readable value)
+                value)))
+</pre></div>
+
+<p>この場合、&lsquo;<samp class="samp">1034</samp>&rsquo;は&lsquo;<samp class="samp">1k</samp>&rsquo;と表示されます。
+ただし、整列では&lsquo;<samp class="samp">45</samp>&rsquo;の後にきます。
+なぜなら、表示されているデータではなく、実際のデータに基づいて整列されるからです。
+</p>
+<p>代えて、表の汎用の書式器ではなく、列の定義に書式器を付けられます。
+</p>
+<div class="example lisp">
+<pre class="lisp-preformatted">(make-vtable
+ :columns '(&quot;Name&quot;
+            (:name &quot;ID&quot; :formatter file-size-human-readable))
+ :objects '((&quot;Foo&quot; 1034)
+            (&quot;Gazonk&quot; 45)))
+</pre></div>
+
+<p>データは単純なリストでなくても構いません。
+vtableにはどんな種類のオブジェクトも与えられます。
+ただし、各列のデータを返す関数も書かなければなりません。
+一例を上げると、以下は<kbd class="kbd">M-x list-buffers</kbd>のとても単純なバージョンです。
+</p>
+<div class="example lisp">
+<pre class="lisp-preformatted">(make-vtable
+ :columns '(&quot;Name&quot; &quot;Size&quot; &quot;File&quot;)
+ :objects (buffer-list)
+ :actions '(&quot;k&quot; kill-buffer
+            &quot;RET&quot; display-buffer)
+ :getter (lambda (object column vtable)
+           (pcase (vtable-column vtable column)
+             (&quot;Name&quot; (buffer-name object))
+             (&quot;Size&quot; (buffer-size object))
+             (&quot;File&quot; (or (buffer-file-name object) &quot;&quot;)))))
+</pre></div>
+
+<p>この場合の<var class="var">objects</var>はバッファのリストです。
+データを表示するために、vtableは<em class="dfn">getter</em>関数を呼びます。
+この関数は各オブジェクトの各列に呼ばれ、最終的に表示されるデータを返します。
+</p>
+<p><em class="dfn">actions</em>にも注意してください。
+これは地点があるオブジェクトで呼ばれる単純な命令です。
+そのためその行で<kbd class="kbd"><kbd class="key">RET</kbd></kbd>と打つと、<code class="code">display-buffer</code>がバッファオブジェクトを引数として呼ばれます（使うキーマップを与えることもできます。
+ただしそうすると、そのオブジェクトに行き着くための<code class="code">vtable-current-object</code>を呼ぶ命令を書かなければなりません）。
+</p>
+<p>なお動作はバッファに表示されるデータには呼ばれません。
+元のオブジェクトで呼ばれます。
+</p>
+<p>最後に、以下は全ての機能を使うだけの例です。
+</p>
+<div class="example lisp">
+<pre class="lisp-preformatted">(make-vtable
+ :columns `(( :name &quot;Thumb&quot; :width &quot;500px&quot;
+              :displayer
+              ,(lambda (value max-width table)
+                 (propertize &quot;*&quot; 'display
+                             (create-image value nil nil
+                                           :max-width max-width))))
+            (:name &quot;Size&quot; :width 10
+                   :formatter file-size-human-readable)
+            (:name &quot;Time&quot; :width 10 :primary ascend)
+            &quot;Name&quot;)
+ :objects-function (lambda ()
+                     (directory-files &quot;/tmp/&quot; t &quot;\\.jpg\\'&quot;))
+ :actions '(&quot;RET&quot; find-file)
+ :getter (lambda (object column table)
+           (pcase (vtable-column table column)
+             (&quot;Name&quot; (file-name-nondirectory object))
+             (&quot;Thumb&quot; object)
+             (&quot;Size&quot; (file-attribute-size (file-attributes object)))
+             (&quot;Time&quot; (format-time-string
+                      &quot;%F&quot; (file-attribute-modification-time
+                            (file-attributes object))))))
+ :separator-width 5
+ :keymap (define-keymap
+           &quot;q&quot; #'kill-buffer))
+</pre></div>
+
+<p>このvtableでは単純な画像閲覧器を実装しています。
+（列の幅によって動的に大きさが変わる）画像サムネイル、人間にとって読みやすいファイルの大きさ、日付、ファイル名が表示されます。
+区切り幅は5つの通常文字幅です。
+行で<kbd class="kbd"><kbd class="key">RET</kbd></kbd>を打つと画像を新しい窓で開きます。
+<kbd class="kbd">q</kbd>を打つとバッファを殺します。
+</p>
+<hr>
+</div>
+<div class="chapter-level-extent" id="g_t_6982_5ff5">
+<div class="nav-panel">
+<p>
+Next: <a href="#g_t_4f5c_8868" accesskey="n" rel="next">作表</a>, Previous: <a href="#g_t_306f_3058_3081_306b" accesskey="p" rel="prev">序と入門</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="chapter" id="Gai-Nian-"><span>2 概念<a class="copiable-link" href="#Gai-Nian-"> &para;</a></span></h2>
+
+<a class="index-entry-id" id="index-vtable"></a>
+<p>vtableは<em class="dfn">オブジェクト</em>の数のデータだけ一覧にします。
+各オブジェクトはリストやベクタにできますが、他のものでもできます。
+</p>
+<a class="index-entry-id" id="index-vtablenoQu-De-Zi-"></a>
+<p>特定の列の<em class="dfn">値</em>を得るには、<em class="dfn">取得子</em>関数がオブジェクトに呼ばれます。
+取得関数が定義されていなければ、既定でオブジェクトを系列として添字で引こうとします。
+何れにせよ、値が得られたら、それが整列に使われます。
+</p>
+<a class="index-entry-id" id="index-vtablenoShu-Shi-Qi-"></a>
+<p>この値は<em class="dfn">書式器</em>関数で<em class="dfn">書式化</em>されます。
+この関数は<em class="dfn">値</em>を引数に呼ばれます。
+書式器はよく、値をより読み手にとって親しみやすいものにします。
+</p>
+<a class="index-entry-id" id="index-vtablenoBiao-ShiQi-"></a>
+<p>最後に、書式化された値は<em class="dfn">表示器</em>関数に渡されます。
+この関数は表のフェイスを書式化された値に付けるはたらきをします。
+また、列の幅より広くないようにもします。
+表示器はよく、長過ぎる文字列を切り詰め、画像の大きさを拡縮します。
+</p>
+<p>これら3つの変換全て、つまり取得子、書式器、表示器の関数は、列毎に定義できます。
+また、表毎にもできます（列毎の変換は表毎の変換に優先します）。
+</p>
+<p>表に定義される利用者の命令は表示されるデータには及びません。
+引数としては元のオブジェクトで呼ばれます。
+</p>
+<hr>
+</div>
+<div class="chapter-level-extent" id="g_t_4f5c_8868">
+<div class="nav-panel">
+<p>
+Next: <a href="#g_t_547d_4ee4" accesskey="n" rel="next">命令</a>, Previous: <a href="#g_t_6982_5ff5" accesskey="p" rel="prev">概念</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="chapter" id="Zuo-Biao-"><span>3 作表<a class="copiable-link" href="#Zuo-Biao-"> &para;</a></span></h2>
+
+<a class="index-entry-id" id="index-make_002dvtable"></a>
+<p>作成のためのインターフェース関数は<code class="code">make-vtable</code>です（バッファに表を挿入できます）。
+表オブジェクトを返します。
+</p>
+<p>キーワード引数は以下に記述される通りです。
+</p>
+<p><code class="code">make-vtable</code>では沢山のコールバックインターフェース関数が使えます。
+その多くが<var class="var">オブジェクト</var>引数（<code class="code">:objects</code>リストにあるオブジェクト）、列の添字の引数（ゼロ始まり）、表の引数（<code class="code">make-vtable</code>が返すオブジェクト）を取ります。
+</p>
+<dl class="table">
+<dt><code class="code">:objects</code></dt>
+<dd><p>表示されるオブジェクトのリストです。
+文字列のリスト（単一列の表として表示されます）か、各要素が系列であるリストです。
+後者の要素は、「単純に」表示できる、文字列、数値、その他のオブジェクトの混合です。
+</p>
+<p>後者の場合、<code class="code">:columns</code>が<code class="code">nil</code>でなく、<code class="code">:columns</code>にあるよりも多く系列に要素があるときは、<code class="code">:columns</code>の最初の要素のみが表示されます。
+</p>
+<p><code class="code">:objeccts</code>リストが空であり（かつ<code class="code">:objects-function</code>が定義されていなければ）、空のvtableが作られます。
+この場合、<code class="code">:columns</code>による仕様が提供されていなければなりません。
+</p>
+</dd>
+<dt><code class="code">:objects-function</code></dt>
+<dd><p>オブジェクトを動的に生成すると便利なことはよくあります（例えば作業内容を自動で復元するなど）。
+その場合、これを（引数なしで呼ばれる）関数にして、<code class="code">:objects</code>のリストとして受け付ける値を返してください。
+</p>
+</dd>
+<dt><code class="code">:columns</code></dt>
+<dd><p>これは各要素が文字列（列名）か、（<code class="code">vtable-column</code>オブジェクトを作る）キーワード／バリューのplistか、完全な<code class="code">vtable-column</code>オブジェクトの何れかです。
+<code class="code">vtable-column</code>オブジェクトには以下のスロットがあります。
+</p>
+<dl class="table">
+<dt><code class="code">name</code></dt>
+<dd><p>列の名前。
+</p>
+</dd>
+<dt><code class="code">width</code></dt>
+<dd><p>列の幅。
+以下の何れかを取れます。
+</p>
+<dl class="table">
+<dt>数値<var class="var">n</var></dt>
+<dt>&lsquo;<samp class="samp"><var class="var">n</var>ex</samp>&rsquo;の形式の文字列</dt>
+<dd><p>表のフェイスの<var class="var">n</var> &lsquo;<samp class="samp">x</samp>&rsquo; 文字の幅です。
+</p>
+</dd>
+<dt>&lsquo;<samp class="samp"><var class="var">n</var>px</samp>&rsquo;の形式の文字列</dt>
+<dd><p><var class="var">n</var>ピクセル。
+</p>
+</dd>
+<dt>&lsquo;<samp class="samp"><var class="var">n</var>%</samp>&rsquo;の形式の文字列</dt>
+<dd><p>ウィンドウの幅の<var class="var">n</var>パーセント。
+</p></dd>
+</dl>
+
+<p><code class="code">width</code>が提供されていなければ、幅は（<code class="code">:objects</code>または<code class="code">:objects-function</code>を通じて提供される）列のデータ、あるいはデータがなければ窓の幅に基づいて計算されます。
+</p>
+</dd>
+<dt><code class="code">min-width</code></dt>
+<dd><p><code class="code">width</code>と同じ書式を使いますが、最小幅を指定します（また、<code class="code">width</code>がこれより小さければ<code class="code">width</code>を上塗りします）。
+</p>
+</dd>
+<dt><code class="code">max-width</code></dt>
+<dd><p>This uses the same format as <code class="code">width</code>, but specifies the maximum width
+(and overrides <code class="code">width</code> if <code class="code">width</code> is larger than this.
+<code class="code">min-width</code>/<code class="code">max-width</code> can be useful if <code class="code">width</code> is given as
+a percentage of the window width, and you want to ensure that the column
+doesn&rsquo;t grow pointlessly large or unreadably narrow.
+</p>
+</dd>
+<dt><code class="code">primary</code></dt>
+<dd><p>これが第一の列であるかです。
+初期の整列に使われます。
+<code class="code">ascend</code>か<code class="code">descend</code>で、表がどちらの順で整列されるかを指定します。
+</p>
+</dd>
+<dt><code class="code">getter</code></dt>
+<dd><p>If present, this function will be called to return the column value.
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-column_002dgetter"><span class="category-def">Function: </span><span><strong class="def-name">column-getter</strong> <var class="def-var-arguments">オブジェクト 表</var><a class="copiable-link" href="#index-column_002dgetter"> &para;</a></span></dt>
+<dd><p>It&rsquo;s called with two parameters: the object and the table.
+</p></dd></dl>
+
+</dd>
+<dt><code class="code">formatter</code></dt>
+<dd><p>存在するとき、この関数を呼んで値を書式化します。
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-column_002dformatter"><span class="category-def">Function: </span><span><strong class="def-name">column-formatter</strong> <var class="def-var-arguments">値</var><a class="copiable-link" href="#index-column_002dformatter"> &para;</a></span></dt>
+<dd><p>列の値の1引数で呼ばれます。
+</p></dd></dl>
+
+</dd>
+<dt><code class="code">displayer</code></dt>
+<dd><p>If present, this function will be called to prepare the formatted value for
+display.  This function should return a string with the table face applied,
+and also limit the width of the string to the display width.
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-column_002ddisplayer"><span class="category-def">Function: </span><span><strong class="def-name">column-displayer</strong> <var class="def-var-arguments">fvalue max-width table</var><a class="copiable-link" href="#index-column_002ddisplayer"> &para;</a></span></dt>
+<dd><p><var class="var">fvalue</var> is the formatted value; <var class="var">max-width</var> is the maximum width
+(in pixels), and <var class="var">table</var> is the table.
+</p></dd></dl>
+
+</dd>
+<dt><code class="code">align</code></dt>
+<dd><p>Should be either <code class="code">right</code> or <code class="code">left</code>.  If not specified, numerical
+values will be flushed to the right, and all other values will be flushed to
+the left.
+</p></dd>
+</dl>
+
+</dd>
+<dt><code class="code">:getter</code></dt>
+<dd><p>If given, this is a function that should return the values to use in the
+table, and will be called once for each element in the table (unless
+overridden by a column getter function).
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-getter"><span class="category-def">Function: </span><span><strong class="def-name">getter</strong> <var class="def-var-arguments">object index table</var><a class="copiable-link" href="#index-getter"> &para;</a></span></dt>
+<dd><p>For a simple object (like a sequence), this function will typically just
+return the element corresponding to the column index (zero-based), but the
+function can do any computation it wants.  If it&rsquo;s more convenient to write
+the function based on column names rather than the column index, the
+<code class="code">vtable-column</code> function can be used to map from index to name.
+</p></dd></dl>
+
+</dd>
+<dt><code class="code">:formatter</code></dt>
+<dd><p>If present, this is a function that should format the value, and it will be
+called on all values in the table (unless overridden by a column formatter).
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-formatter"><span class="category-def">Function: </span><span><strong class="def-name">formatter</strong> <var class="def-var-arguments">value index table</var><a class="copiable-link" href="#index-formatter"> &para;</a></span></dt>
+<dd><p>This function is called with three parameters: the value (as returned by the
+getter); the column index, and the table.  It can return any value.
+</p>
+<p>This can be used to (for instance) format numbers in a human-readable form.
+</p></dd></dl>
+
+</dd>
+<dt><code class="code">:displayer</code></dt>
+<dd><p>Before displaying an element, it&rsquo;s passed to the displaying function (if
+any).
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-displayer"><span class="category-def">Function: </span><span><strong class="def-name">displayer</strong> <var class="def-var-arguments">fvalue index max-width table</var><a class="copiable-link" href="#index-displayer"> &para;</a></span></dt>
+<dd><p>This is called with four arguments: the formatted value of the element (as
+returned by the formatter function); the column index; the display width (in
+pixels); and the table.
+</p>
+<p>This function should return a string with the table face applied, and
+truncated to the display width.
+</p>
+<p>This can be used to (for instance) change the size of images that are
+displayed in the table.
+</p></dd></dl>
+
+</dd>
+<dt><code class="code">:use-header-line</code></dt>
+<dd><p><code class="code">nil</code>でなければ（それが既定です）、見出し行に列名を表示します。
+これがほとんどの場合でよくあることですが、表の前にバッファに別のテキストがあったり、同じバッファに複数の表があったりするときは、<code class="code">nil</code>にしてください。
+</p>
+</dd>
+<dt><code class="code">:face</code></dt>
+<dd><p>The face to be used.  This defaults to <code class="code">vtable</code>.  This face doesn&rsquo;t
+override the faces in the data, or the faces supplied by the getter and
+formatter functions.
+</p>
+</dd>
+<dt><code class="code">:row-colors</code></dt>
+<dd><p>If present, this should be a list of color names to be used as the
+background color on the rows.  If there are fewer colors here than there are
+rows, the rows will be repeated.  The most common use case here is to have
+alternating background colors on the rows, so this would usually be a list
+of two colors.  This can also be a list of faces to be used.
+</p>
+</dd>
+<dt><code class="code">:column-colors</code></dt>
+<dd><p>If present, this should be a list of color names to be used as the
+background color on the columns.  If there are fewer colors here than there
+are columns, the colors will be repeated.  The most common use case here is
+to have alternating background colors on the columns, so this would usually
+be a list of two colors.  This can also be a list of faces to be used.  If
+both <code class="code">:row-colors</code> and <code class="code">:column-colors</code> is present, the colors
+will be &ldquo;blended&rdquo; to produce the final colors in the table.
+</p>
+</dd>
+<dt><code class="code">:actions</code></dt>
+<dd><p><code class="code">define-keymap</code>と同じ構文が使われますが、命令を直接参照はしません。
+各キーは現在のオブジェクトを選び出す命令に束縛され、指定された関数を引数として呼びます。
+</p>
+</dd>
+<dt><code class="code">:keymap</code></dt>
+<dd><p>表で使われるキーマップです。
+この命令は通常通りに呼ばれ、現在の行に表示されているオブジェクトを扱うものであれば、<code class="code">vtable-current-object</code>関数
+(see &lsquo;Interface Functions&rsquo;) を使ってオブジェクトが何であるのかを調べられます。
+</p>
+</dd>
+<dt><code class="code">:separator-width</code></dt>
+<dd><p>The width of the blank space between columns.  If not specified, it defaults
+to 1.
+</p>
+</dd>
+<dt><code class="code">:divider-width</code></dt>
+<dt><code class="code">:divider</code></dt>
+<dd><p>You can have a divider inserted between the columns.  This can either be
+specified by using <code class="code">:divider</code>, which should be a string to be displayed
+between the columns, or <code class="code">:divider-width</code>, which specifies the width of
+the space to be used as the divider, in units of characters of the face used
+to display the table.  If not specified, <code class="code">:divider</code> defaults to
+<code class="code">nil</code>, but specifying <code class="code">:divider-width</code> effectively sets the
+divider to a whitespace string of that width.
+</p>
+</dd>
+<dt><code class="code">:sort-by</code></dt>
+<dd><p>This should be a list of tuples, and specifies how the table is to be
+sorted.  Each tuple should consist of an integer (the column index)  and
+either <code class="code">ascend</code> or <code class="code">descend</code>.
+</p>
+<p>The table is first sorted by the first element in this list, and then the
+next, until the end is reached.
+</p>
+</dd>
+<dt><code class="code">:ellipsis</code></dt>
+<dd><p>By default, when shortening displayed values, an ellipsis will be shown.  If
+this is <code class="code">nil</code>, no ellipsis is shown.  (The text to use as the ellipsis
+is determined by the <code class="code">truncate-string-ellipsis</code> function.)
+</p>
+</dd>
+<dt><a id="index-vtable_002dinsert"></a><span><code class="code">:insert</code><a class="copiable-link" href="#index-vtable_002dinsert"> &para;</a></span></dt>
+<dd><p>既定では、<code class="code">make-vtable</code>は表をその地点に挿入します。
+これが<code class="code">nil</code>であれば、何も挿入されませんが、vtableオブジェクトが返されます。
+そして、後から<code class="code">vtable-insert</code>関数で挿入できます。
+</p></dd>
+</dl>
+
+<p><code class="code">make-table</code>は<code class="code">vtable</code>オブジェクトを返します。
+オブジェクトのスロットへは、上述のキーワードに基づく名前を持つアクセサ関数を使ってアクセスできます。
+例えばフェイスにアクセスするには<code class="code">vtable-face</code>を使います。
+</p>
+<hr>
+</div>
+<div class="chapter-level-extent" id="g_t_547d_4ee4">
+<div class="nav-panel">
+<p>
+Next: <a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570" accesskey="n" rel="next">インターフェース関数</a>, Previous: <a href="#g_t_4f5c_8868" accesskey="p" rel="prev">作表</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="chapter" id="Ming-Ling-"><span>4 命令<a class="copiable-link" href="#Ming-Ling-"> &para;</a></span></h2>
+<a class="index-entry-id" id="index-vtablenoMing-Ling-"></a>
+
+<p>地点がvtableに置かれていれば、以下のキーが束縛されます。
+</p>
+<dl class="table">
+<dt><a id="index-vtable_002dsort_002dby_002dcurrent_002dcolumn"></a><span><kbd class="kbd">S</kbd><a class="copiable-link" href="#index-vtable_002dsort_002dby_002dcurrent_002dcolumn"> &para;</a></span></dt>
+<dd><p>現在の行で表を整列します (<code class="code">vtable-sort-by-current-column</code>)。
+なお表は、取得関数 (see &lsquo;Making A Table&rsquo;) によって返されるデータに従って昇順に整列されます。
+バッファに表示されているものではありません。
+数値データしかない列は数値として整列され、それ以外は文字列として整列されます。
+</p>
+</dd>
+<dt><a id="index-vtable_002dnarrow_002dcurrent_002dcolumn"></a><span><kbd class="kbd">{</kbd><a class="copiable-link" href="#index-vtable_002dnarrow_002dcurrent_002dcolumn"> &para;</a></span></dt>
+<dd><p>現在の列を狭くします (<code class="code">vtable-narrow-current-column</code>)。
+</p>
+</dd>
+<dt><a id="index-vtable_002dwiden_002dcurrent_002dcolumn"></a><span><kbd class="kbd">}</kbd><a class="copiable-link" href="#index-vtable_002dwiden_002dcurrent_002dcolumn"> &para;</a></span></dt>
+<dd><p>現在の列を広くします (<code class="code">vtable-widen-current-column</code>)。
+</p>
+</dd>
+<dt><a id="index-vtable_002dprevious_002dcolumn"></a><span><kbd class="kbd">M-&lt;left&gt;</kbd><a class="copiable-link" href="#index-vtable_002dprevious_002dcolumn"> &para;</a></span></dt>
+<dd><p>前の列に移ります (<code class="code">vtable-previous-column</code>)。
+</p>
+</dd>
+<dt><a id="index-vtable_002dnext_002dcolumn"></a><span><kbd class="kbd">M-&lt;right&gt;</kbd><a class="copiable-link" href="#index-vtable_002dnext_002dcolumn"> &para;</a></span></dt>
+<dd><p>次の列に移ります (<code class="code">vtable-next-column</code>)。
+</p>
+</dd>
+<dt><a id="index-vtable_002drevert_002dcommand"></a><span><kbd class="kbd">g</kbd><a class="copiable-link" href="#index-vtable_002drevert_002dcommand"> &para;</a></span></dt>
+<dd><p>表を再生成します (<code class="code">vtable-revert-command</code>)。
+この命令は、表に<code class="code">:objects-function</code>があり、新しいデータが取得できれば、効果があるでしょう。
+</p></dd>
+</dl>
+
+<hr>
+</div>
+<div class="chapter-level-extent" id="g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">
+<div class="nav-panel">
+<p>
+Next: <a href="#GNU_81ea_7531_6587_66f8_4f7f_7528_8a31_8afe" accesskey="n" rel="next">GNU自由文書使用許諾</a>, Previous: <a href="#g_t_547d_4ee4" accesskey="p" rel="prev">命令</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="chapter" id="intahuesuGuan-Shu-"><span>5 インターフェース関数<a class="copiable-link" href="#intahuesuGuan-Shu-"> &para;</a></span></h2>
+
+<p>vtableに基づくモードを書く必要があるなら、表を様々な方法で扱わなければなりません。
+例えばオブジェクトを更新して結果を表示する命令を書く必要があります。
+本章はそうした扱いをするための関数を説明します。
+</p>
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dcurrent_002dtable"><span class="category-def">Function: </span><span><strong class="def-name">vtable-current-table</strong><a class="copiable-link" href="#index-vtable_002dcurrent_002dtable"> &para;</a></span></dt>
+<dd><p>この関数は地点がある表を返します。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dcurrent_002dobject"><span class="category-def">Function: </span><span><strong class="def-name">vtable-current-object</strong><a class="copiable-link" href="#index-vtable_002dcurrent_002dobject"> &para;</a></span></dt>
+<dd><p>この関数は現在の行にあるオブジェクトを返します（なおこれは元のオブジェクトであって、バッファに表示されている文字ではありません）。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dcurrent_002dcolumn"><span class="category-def">Function: </span><span><strong class="def-name">vtable-current-column</strong><a class="copiable-link" href="#index-vtable_002dcurrent_002dcolumn"> &para;</a></span></dt>
+<dd><p>この関数は現在のバッファの現在の間隔の大きさを返します。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dgoto_002dtable"><span class="category-def">Function: </span><span><strong class="def-name">vtable-goto-table</strong> <var class="def-var-arguments">表</var><a class="copiable-link" href="#index-vtable_002dgoto_002dtable"> &para;</a></span></dt>
+<dd><p>地点を<var class="var">表</var>の始めに移してその位置を返します。
+<var class="var">表</var>が現在のバッファに見当たらなければ、地点を移さず<code class="code">nil</code>を返します。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dgoto_002dobject"><span class="category-def">Function: </span><span><strong class="def-name">vtable-goto-object</strong> <var class="def-var-arguments">オブジェクト</var><a class="copiable-link" href="#index-vtable_002dgoto_002dobject"> &para;</a></span></dt>
+<dd><p><var class="var">オブジェクト</var>が現在の表に表示されている行の最初に地点を移し、その位置を返します。
+<var class="var">オブジェクト</var>が見当たらなければ、地点を移さず<code class="code">nil</code>を返します。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dgoto_002dcolumn"><span class="category-def">Function: </span><span><strong class="def-name">vtable-goto-column</strong> <var class="def-var-arguments">添字</var><a class="copiable-link" href="#index-vtable_002dgoto_002dcolumn"> &para;</a></span></dt>
+<dd><p><var class="var">添字</var>番目の列の始めに地点を移します（最初の列はゼロ番目です）。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dbeginning_002dof_002dtable"><span class="category-def">Function: </span><span><strong class="def-name">vtable-beginning-of-table</strong><a class="copiable-link" href="#index-vtable_002dbeginning_002dof_002dtable"> &para;</a></span></dt>
+<dd><p>現在の表の始めに移ります。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dend_002dof_002dtable"><span class="category-def">Function: </span><span><strong class="def-name">vtable-end-of-table</strong><a class="copiable-link" href="#index-vtable_002dend_002dof_002dtable"> &para;</a></span></dt>
+<dd><p>現在の表の終わりに移ります。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dremove_002dobject"><span class="category-def">Function: </span><span><strong class="def-name">vtable-remove-object</strong> <var class="def-var-arguments">表 オブジェクト</var><a class="copiable-link" href="#index-vtable_002dremove_002dobject"> &para;</a></span></dt>
+<dd><p><var class="var">表</var>から<var class="var">オブジェクト</var>を削除します。
+これは表示されている表も更新します。
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dinsert_002dobject"><span class="category-def">Function: </span><span><strong class="def-name">vtable-insert-object</strong> <var class="def-var-arguments">表 オブジェクト &amp;optional 位置 前</var><a class="copiable-link" href="#index-vtable_002dinsert_002dobject"> &para;</a></span></dt>
+<dd><p>Insert <var class="var">object</var> into <var class="var">table</var>.  <var class="var">location</var> should be an object in
+the table, the new object is inserted after this object, or before it if
+<var class="var">before</var> is non-<code class="code">nil</code>.  If <var class="var">location</var> is <code class="code">nil</code>,
+<var class="var">object</var> is appended to <var class="var">table</var>, or prepended if <var class="var">before</var> is
+non-<code class="code">nil</code>.
+</p>
+<p><var class="var">location</var> can also be an integer, a zero-based index into the table.
+In this case, <var class="var">object</var> is inserted at that index.  If the index is out
+of range, <var class="var">object</var> is prepended to <var class="var">table</var> if the index is too
+small, or appended if it is too large.  In this case, <var class="var">before</var> is
+ignored.
+</p>
+<p>If <var class="var">table</var> is empty, <var class="var">location</var> and <var class="var">before</var> are ignored.
+</p>
+<p>This also updates the displayed table.
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dupdate_002dobject"><span class="category-def">Function: </span><span><strong class="def-name">vtable-update-object</strong> <var class="def-var-arguments">table object &amp;optional old-object</var><a class="copiable-link" href="#index-vtable_002dupdate_002dobject"> &para;</a></span></dt>
+<dd><p>Update <var class="var">object</var>&rsquo;s representation in <var class="var">table</var>.  Optional argument
+<var class="var">old-object</var>, if non-<code class="code">nil</code>, means to replace <var class="var">old-object</var> with
+<var class="var">object</var> and redisplay the associated row in the table.  In either case,
+if the existing object is not found in the table (being compared with
+<code class="code">equal</code>), signal an error.
+</p>
+<p>This has the same effect as calling <code class="code">vtable-remove-object</code> and then
+<code class="code">vtable-insert-object</code>, but is more efficient.
+</p>
+<p>Note a limitation: if the table&rsquo;s buffer is not in a visible window, or if
+its window has changed width since it was updated, updating the table is not
+possible, and an error is signaled.
+</p></dd></dl>
+
+<dl class="first-deffn first-defun-alias-first-deffn">
+<dt class="deffn defun-alias-deffn" id="index-vtable_002dcolumn"><span class="category-def">Function: </span><span><strong class="def-name">vtable-column</strong> <var class="def-var-arguments">表 添字</var><a class="copiable-link" href="#index-vtable_002dcolumn"> &para;</a></span></dt>
+<dd><p><var class="var">表</var>の<var class="var">添字</var>番目の列の列名を返します。
+</p></dd></dl>
+
+<hr>
+</div>
+<div class="chapter-level-extent" id="GNU_81ea_7531_6587_66f8_4f7f_7528_8a31_8afe">
+<div class="nav-panel">
+<p>
+Next: <a href="#g_t_7d22_5f15" accesskey="n" rel="next">索引</a>, Previous: <a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570" accesskey="p" rel="prev">インターフェース関数</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="chapter" id="GNUZi-You-WenShu-Shi-Yong-Xu-Nuo-"><span>6 GNU自由文書使用許諾<a class="copiable-link" href="#GNUZi-You-WenShu-Shi-Yong-Xu-Nuo-"> &para;</a></span></h2>
+<div class="center">Version 1.3, 3 November 2008
+</div>
+
+<div class="display">
+<pre class="display-preformatted">Copyright &copy; 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+<a class="uref" href="https://fsf.org/">https://fsf.org/</a>
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+</pre></div>
+
+<ol class="enumerate" start="0">
+<li> PREAMBLE
+
+<p>The purpose of this License is to make a manual, textbook, or other
+functional and useful document <em class="dfn">free</em> in the sense of freedom: to
+assure everyone the effective freedom to copy and redistribute it,
+with or without modifying it, either commercially or noncommercially.
+Secondarily, this License preserves for the author and publisher a way
+to get credit for their work, while not being considered responsible
+for modifications made by others.
+</p>
+<p>This License is a kind of &ldquo;copyleft&rdquo;, which means that derivative
+works of the document must themselves be free in the same sense.  It
+complements the GNU General Public License, which is a copyleft
+license designed for free software.
+</p>
+<p>We have designed this License in order to use it for manuals for free
+software, because free software needs free documentation: a free
+program should come with manuals providing the same freedoms that the
+software does.  But this License is not limited to software manuals;
+it can be used for any textual work, regardless of subject matter or
+whether it is published as a printed book.  We recommend this License
+principally for works whose purpose is instruction or reference.
+</p>
+</li><li> APPLICABILITY AND DEFINITIONS
+
+<p>This License applies to any manual or other work, in any medium, that
+contains a notice placed by the copyright holder saying it can be
+distributed under the terms of this License.  Such a notice grants a
+world-wide, royalty-free license, unlimited in duration, to use that
+work under the conditions stated herein.  The &ldquo;Document&rdquo;, below,
+refers to any such manual or work.  Any member of the public is a
+licensee, and is addressed as &ldquo;you&rdquo;.  You accept the license if you
+copy, modify or distribute the work in a way requiring permission
+under copyright law.
+</p>
+<p>A &ldquo;Modified Version&rdquo; of the Document means any work containing the
+Document or a portion of it, either copied verbatim, or with
+modifications and/or translated into another language.
+</p>
+<p>A &ldquo;Secondary Section&rdquo; is a named appendix or a front-matter section
+of the Document that deals exclusively with the relationship of the
+publishers or authors of the Document to the Document&rsquo;s overall
+subject (or to related matters) and contains nothing that could fall
+directly within that overall subject.  (Thus, if the Document is in
+part a textbook of mathematics, a Secondary Section may not explain
+any mathematics.)  The relationship could be a matter of historical
+connection with the subject or with related matters, or of legal,
+commercial, philosophical, ethical or political position regarding
+them.
+</p>
+<p>The &ldquo;Invariant Sections&rdquo; are certain Secondary Sections whose titles
+are designated, as being those of Invariant Sections, in the notice
+that says that the Document is released under this License.  If a
+section does not fit the above definition of Secondary then it is not
+allowed to be designated as Invariant.  The Document may contain zero
+Invariant Sections.  If the Document does not identify any Invariant
+Sections then there are none.
+</p>
+<p>The &ldquo;Cover Texts&rdquo; are certain short passages of text that are listed,
+as Front-Cover Texts or Back-Cover Texts, in the notice that says that
+the Document is released under this License.  A Front-Cover Text may
+be at most 5 words, and a Back-Cover Text may be at most 25 words.
+</p>
+<p>A &ldquo;Transparent&rdquo; copy of the Document means a machine-readable copy,
+represented in a format whose specification is available to the
+general public, that is suitable for revising the document
+straightforwardly with generic text editors or (for images composed of
+pixels) generic paint programs or (for drawings) some widely available
+drawing editor, and that is suitable for input to text formatters or
+for automatic translation to a variety of formats suitable for input
+to text formatters.  A copy made in an otherwise Transparent file
+format whose markup, or absence of markup, has been arranged to thwart
+or discourage subsequent modification by readers is not Transparent.
+An image format is not Transparent if used for any substantial amount
+of text.  A copy that is not &ldquo;Transparent&rdquo; is called &ldquo;Opaque&rdquo;.
+</p>
+<p>Examples of suitable formats for Transparent copies include plain
+ASCII without markup, Texinfo input format, LaTeX input
+format, SGML or XML using a publicly available
+DTD, and standard-conforming simple HTML,
+PostScript or PDF designed for human modification.  Examples
+of transparent image formats include PNG, XCF and
+JPG.  Opaque formats include proprietary formats that can be
+read and edited only by proprietary word processors, SGML or
+XML for which the DTD and/or processing tools are
+not generally available, and the machine-generated HTML,
+PostScript or PDF produced by some word processors for
+output purposes only.
+</p>
+<p>The &ldquo;Title Page&rdquo; means, for a printed book, the title page itself,
+plus such following pages as are needed to hold, legibly, the material
+this License requires to appear in the title page.  For works in
+formats which do not have any title page as such, &ldquo;Title Page&rdquo; means
+the text near the most prominent appearance of the work&rsquo;s title,
+preceding the beginning of the body of the text.
+</p>
+<p>The &ldquo;publisher&rdquo; means any person or entity that distributes copies
+of the Document to the public.
+</p>
+<p>A section &ldquo;Entitled XYZ&rdquo; means a named subunit of the Document whose
+title either is precisely XYZ or contains XYZ in parentheses following
+text that translates XYZ in another language.  (Here XYZ stands for a
+specific section name mentioned below, such as &ldquo;Acknowledgements&rdquo;,
+&ldquo;Dedications&rdquo;, &ldquo;Endorsements&rdquo;, or &ldquo;History&rdquo;.)  To &ldquo;Preserve the Title&rdquo;
+of such a section when you modify the Document means that it remains a
+section &ldquo;Entitled XYZ&rdquo; according to this definition.
+</p>
+<p>The Document may include Warranty Disclaimers next to the notice which
+states that this License applies to the Document.  These Warranty
+Disclaimers are considered to be included by reference in this
+License, but only as regards disclaiming warranties: any other
+implication that these Warranty Disclaimers may have is void and has
+no effect on the meaning of this License.
+</p>
+</li><li> VERBATIM COPYING
+
+<p>You may copy and distribute the Document in any medium, either
+commercially or noncommercially, provided that this License, the
+copyright notices, and the license notice saying this License applies
+to the Document are reproduced in all copies, and that you add no other
+conditions whatsoever to those of this License.  You may not use
+technical measures to obstruct or control the reading or further
+copying of the copies you make or distribute.  However, you may accept
+compensation in exchange for copies.  If you distribute a large enough
+number of copies you must also follow the conditions in section 3.
+</p>
+<p>You may also lend copies, under the same conditions stated above, and
+you may publicly display copies.
+</p>
+</li><li> COPYING IN QUANTITY
+
+<p>If you publish printed copies (or copies in media that commonly have
+printed covers) of the Document, numbering more than 100, and the
+Document&rsquo;s license notice requires Cover Texts, you must enclose the
+copies in covers that carry, clearly and legibly, all these Cover
+Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on
+the back cover.  Both covers must also clearly and legibly identify
+you as the publisher of these copies.  The front cover must present
+the full title with all words of the title equally prominent and
+visible.  You may add other material on the covers in addition.
+Copying with changes limited to the covers, as long as they preserve
+the title of the Document and satisfy these conditions, can be treated
+as verbatim copying in other respects.
+</p>
+<p>If the required texts for either cover are too voluminous to fit
+legibly, you should put the first ones listed (as many as fit
+reasonably) on the actual cover, and continue the rest onto adjacent
+pages.
+</p>
+<p>If you publish or distribute Opaque copies of the Document numbering
+more than 100, you must either include a machine-readable Transparent
+copy along with each Opaque copy, or state in or with each Opaque copy
+a computer-network location from which the general network-using
+public has access to download using public-standard network protocols
+a complete Transparent copy of the Document, free of added material.
+If you use the latter option, you must take reasonably prudent steps,
+when you begin distribution of Opaque copies in quantity, to ensure
+that this Transparent copy will remain thus accessible at the stated
+location until at least one year after the last time you distribute an
+Opaque copy (directly or through your agents or retailers) of that
+edition to the public.
+</p>
+<p>It is requested, but not required, that you contact the authors of the
+Document well before redistributing any large number of copies, to give
+them a chance to provide you with an updated version of the Document.
+</p>
+</li><li> MODIFICATIONS
+
+<p>You may copy and distribute a Modified Version of the Document under
+the conditions of sections 2 and 3 above, provided that you release
+the Modified Version under precisely this License, with the Modified
+Version filling the role of the Document, thus licensing distribution
+and modification of the Modified Version to whoever possesses a copy
+of it.  In addition, you must do these things in the Modified Version:
+</p>
+<ol class="enumerate" type="A" start="1">
+<li> Use in the Title Page (and on the covers, if any) a title distinct
+from that of the Document, and from those of previous versions
+(which should, if there were any, be listed in the History section
+of the Document).  You may use the same title as a previous version
+if the original publisher of that version gives permission.
+
+</li><li> List on the Title Page, as authors, one or more persons or entities
+responsible for authorship of the modifications in the Modified
+Version, together with at least five of the principal authors of the
+Document (all of its principal authors, if it has fewer than five),
+unless they release you from this requirement.
+
+</li><li> State on the Title page the name of the publisher of the
+Modified Version, as the publisher.
+
+</li><li> Preserve all the copyright notices of the Document.
+
+</li><li> Add an appropriate copyright notice for your modifications
+adjacent to the other copyright notices.
+
+</li><li> Include, immediately after the copyright notices, a license notice
+giving the public permission to use the Modified Version under the
+terms of this License, in the form shown in the Addendum below.
+
+</li><li> Preserve in that license notice the full lists of Invariant Sections
+and required Cover Texts given in the Document&rsquo;s license notice.
+
+</li><li> Include an unaltered copy of this License.
+
+</li><li> Preserve the section Entitled &ldquo;History&rdquo;, Preserve its Title, and add
+to it an item stating at least the title, year, new authors, and
+publisher of the Modified Version as given on the Title Page.  If
+there is no section Entitled &ldquo;History&rdquo; in the Document, create one
+stating the title, year, authors, and publisher of the Document as
+given on its Title Page, then add an item describing the Modified
+Version as stated in the previous sentence.
+
+</li><li> Preserve the network location, if any, given in the Document for
+public access to a Transparent copy of the Document, and likewise
+the network locations given in the Document for previous versions
+it was based on.  These may be placed in the &ldquo;History&rdquo; section.
+You may omit a network location for a work that was published at
+least four years before the Document itself, or if the original
+publisher of the version it refers to gives permission.
+
+</li><li> For any section Entitled &ldquo;Acknowledgements&rdquo; or &ldquo;Dedications&rdquo;, Preserve
+the Title of the section, and preserve in the section all the
+substance and tone of each of the contributor acknowledgements and/or
+dedications given therein.
+
+</li><li> Preserve all the Invariant Sections of the Document,
+unaltered in their text and in their titles.  Section numbers
+or the equivalent are not considered part of the section titles.
+
+</li><li> Delete any section Entitled &ldquo;Endorsements&rdquo;.  Such a section
+may not be included in the Modified Version.
+
+</li><li> Do not retitle any existing section to be Entitled &ldquo;Endorsements&rdquo; or
+to conflict in title with any Invariant Section.
+
+</li><li> Preserve any Warranty Disclaimers.
+</li></ol>
+
+<p>If the Modified Version includes new front-matter sections or
+appendices that qualify as Secondary Sections and contain no material
+copied from the Document, you may at your option designate some or all
+of these sections as invariant.  To do this, add their titles to the
+list of Invariant Sections in the Modified Version&rsquo;s license notice.
+These titles must be distinct from any other section titles.
+</p>
+<p>You may add a section Entitled &ldquo;Endorsements&rdquo;, provided it contains
+nothing but endorsements of your Modified Version by various
+parties&mdash;for example, statements of peer review or that the text has
+been approved by an organization as the authoritative definition of a
+standard.
+</p>
+<p>You may add a passage of up to five words as a Front-Cover Text, and a
+passage of up to 25 words as a Back-Cover Text, to the end of the list
+of Cover Texts in the Modified Version.  Only one passage of
+Front-Cover Text and one of Back-Cover Text may be added by (or
+through arrangements made by) any one entity.  If the Document already
+includes a cover text for the same cover, previously added by you or
+by arrangement made by the same entity you are acting on behalf of,
+you may not add another; but you may replace the old one, on explicit
+permission from the previous publisher that added the old one.
+</p>
+<p>The author(s) and publisher(s) of the Document do not by this License
+give permission to use their names for publicity for or to assert or
+imply endorsement of any Modified Version.
+</p>
+</li><li> COMBINING DOCUMENTS
+
+<p>You may combine the Document with other documents released under this
+License, under the terms defined in section 4 above for modified
+versions, provided that you include in the combination all of the
+Invariant Sections of all of the original documents, unmodified, and
+list them all as Invariant Sections of your combined work in its
+license notice, and that you preserve all their Warranty Disclaimers.
+</p>
+<p>The combined work need only contain one copy of this License, and
+multiple identical Invariant Sections may be replaced with a single
+copy.  If there are multiple Invariant Sections with the same name but
+different contents, make the title of each such section unique by
+adding at the end of it, in parentheses, the name of the original
+author or publisher of that section if known, or else a unique number.
+Make the same adjustment to the section titles in the list of
+Invariant Sections in the license notice of the combined work.
+</p>
+<p>In the combination, you must combine any sections Entitled &ldquo;History&rdquo;
+in the various original documents, forming one section Entitled
+&ldquo;History&rdquo;; likewise combine any sections Entitled &ldquo;Acknowledgements&rdquo;,
+and any sections Entitled &ldquo;Dedications&rdquo;.  You must delete all
+sections Entitled &ldquo;Endorsements.&rdquo;
+</p>
+</li><li> COLLECTIONS OF DOCUMENTS
+
+<p>You may make a collection consisting of the Document and other documents
+released under this License, and replace the individual copies of this
+License in the various documents with a single copy that is included in
+the collection, provided that you follow the rules of this License for
+verbatim copying of each of the documents in all other respects.
+</p>
+<p>You may extract a single document from such a collection, and distribute
+it individually under this License, provided you insert a copy of this
+License into the extracted document, and follow this License in all
+other respects regarding verbatim copying of that document.
+</p>
+</li><li> AGGREGATION WITH INDEPENDENT WORKS
+
+<p>A compilation of the Document or its derivatives with other separate
+and independent documents or works, in or on a volume of a storage or
+distribution medium, is called an &ldquo;aggregate&rdquo; if the copyright
+resulting from the compilation is not used to limit the legal rights
+of the compilation&rsquo;s users beyond what the individual works permit.
+When the Document is included in an aggregate, this License does not
+apply to the other works in the aggregate which are not themselves
+derivative works of the Document.
+</p>
+<p>If the Cover Text requirement of section 3 is applicable to these
+copies of the Document, then if the Document is less than one half of
+the entire aggregate, the Document&rsquo;s Cover Texts may be placed on
+covers that bracket the Document within the aggregate, or the
+electronic equivalent of covers if the Document is in electronic form.
+Otherwise they must appear on printed covers that bracket the whole
+aggregate.
+</p>
+</li><li> TRANSLATION
+
+<p>Translation is considered a kind of modification, so you may
+distribute translations of the Document under the terms of section 4.
+Replacing Invariant Sections with translations requires special
+permission from their copyright holders, but you may include
+translations of some or all Invariant Sections in addition to the
+original versions of these Invariant Sections.  You may include a
+translation of this License, and all the license notices in the
+Document, and any Warranty Disclaimers, provided that you also include
+the original English version of this License and the original versions
+of those notices and disclaimers.  In case of a disagreement between
+the translation and the original version of this License or a notice
+or disclaimer, the original version will prevail.
+</p>
+<p>If a section in the Document is Entitled &ldquo;Acknowledgements&rdquo;,
+&ldquo;Dedications&rdquo;, or &ldquo;History&rdquo;, the requirement (section 4) to Preserve
+its Title (section 1) will typically require changing the actual
+title.
+</p>
+</li><li> TERMINATION
+
+<p>You may not copy, modify, sublicense, or distribute the Document
+except as expressly provided under this License.  Any attempt
+otherwise to copy, modify, sublicense, or distribute it is void, and
+will automatically terminate your rights under this License.
+</p>
+<p>However, if you cease all violation of this License, then your license
+from a particular copyright holder is reinstated (a) provisionally,
+unless and until the copyright holder explicitly and finally
+terminates your license, and (b) permanently, if the copyright holder
+fails to notify you of the violation by some reasonable means prior to
+60 days after the cessation.
+</p>
+<p>Moreover, your license from a particular copyright holder is
+reinstated permanently if the copyright holder notifies you of the
+violation by some reasonable means, this is the first time you have
+received notice of violation of this License (for any work) from that
+copyright holder, and you cure the violation prior to 30 days after
+your receipt of the notice.
+</p>
+<p>Termination of your rights under this section does not terminate the
+licenses of parties who have received copies or rights from you under
+this License.  If your rights have been terminated and not permanently
+reinstated, receipt of a copy of some or all of the same material does
+not give you any rights to use it.
+</p>
+</li><li> FUTURE REVISIONS OF THIS LICENSE
+
+<p>The Free Software Foundation may publish new, revised versions
+of the GNU Free Documentation License from time to time.  Such new
+versions will be similar in spirit to the present version, but may
+differ in detail to address new problems or concerns.  See
+<a class="uref" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.
+</p>
+<p>Each version of the License is given a distinguishing version number.
+If the Document specifies that a particular numbered version of this
+License &ldquo;or any later version&rdquo; applies to it, you have the option of
+following the terms and conditions either of that specified version or
+of any later version that has been published (not as a draft) by the
+Free Software Foundation.  If the Document does not specify a version
+number of this License, you may choose any version ever published (not
+as a draft) by the Free Software Foundation.  If the Document
+specifies that a proxy can decide which future versions of this
+License can be used, that proxy&rsquo;s public statement of acceptance of a
+version permanently authorizes you to choose that version for the
+Document.
+</p>
+</li><li> RELICENSING
+
+<p>&ldquo;Massive Multiauthor Collaboration Site&rdquo; (or &ldquo;MMC Site&rdquo;) means any
+World Wide Web server that publishes copyrightable works and also
+provides prominent facilities for anybody to edit those works.  A
+public wiki that anybody can edit is an example of such a server.  A
+&ldquo;Massive Multiauthor Collaboration&rdquo; (or &ldquo;MMC&rdquo;) contained in the
+site means any set of copyrightable works thus published on the MMC
+site.
+</p>
+<p>&ldquo;CC-BY-SA&rdquo; means the Creative Commons Attribution-Share Alike 3.0
+license published by Creative Commons Corporation, a not-for-profit
+corporation with a principal place of business in San Francisco,
+California, as well as future copyleft versions of that license
+published by that same organization.
+</p>
+<p>&ldquo;Incorporate&rdquo; means to publish or republish a Document, in whole or
+in part, as part of another Document.
+</p>
+<p>An MMC is &ldquo;eligible for relicensing&rdquo; if it is licensed under this
+License, and if all works that were first published under this License
+somewhere other than this MMC, and subsequently incorporated in whole
+or in part into the MMC, (1) had no cover texts or invariant sections,
+and (2) were thus incorporated prior to November 1, 2008.
+</p>
+<p>The operator of an MMC Site may republish an MMC contained in the site
+under CC-BY-SA on the same site at any time before August 1, 2009,
+provided the MMC is eligible for relicensing.
+</p>
+</li></ol>
+
+<h3 class="heading" id="ADDENDUM_003a-How-to-use-this-License-for-your-documents"><span>ADDENDUM: How to use this License for your documents<a class="copiable-link" href="#ADDENDUM_003a-How-to-use-this-License-for-your-documents"> &para;</a></span></h3>
+
+<p>To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and
+license notices just after the title page:
+</p>
+<div class="example smallexample">
+<div class="group"><pre class="example-preformatted">  Copyright (C)  <var class="var">year</var>  <var class="var">your name</var>.
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.3
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+  Texts.  A copy of the license is included in the section entitled ``GNU
+  Free Documentation License''.
+</pre></div></div>
+
+<p>If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+replace the &ldquo;with&hellip;Texts.&rdquo; line with this:
+</p>
+<div class="example smallexample">
+<div class="group"><pre class="example-preformatted">    with the Invariant Sections being <var class="var">list their titles</var>, with
+    the Front-Cover Texts being <var class="var">list</var>, and with the Back-Cover Texts
+    being <var class="var">list</var>.
+</pre></div></div>
+
+<p>If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+</p>
+<p>If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License,
+to permit their use in free software.
+</p>
+
+<hr>
+</div>
+<div class="unnumbered-level-extent" id="g_t_7d22_5f15">
+<div class="nav-panel">
+<p>
+Previous: <a href="#GNU_81ea_7531_6587_66f8_4f7f_7528_8a31_8afe" accesskey="p" rel="prev">GNU自由文書使用許諾</a>, Up: <a href="#Top" accesskey="u" rel="up">vtable</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#g_t_7d22_5f15" title="Index" rel="index">Index</a>]</p>
+</div>
+<h2 class="unnumbered" id="Suo-Yin-"><span>索引<a class="copiable-link" href="#Suo-Yin-"> &para;</a></span></h2>
+<div class="printindex cp-printindex">
+<table class="cp-letters-header-printindex"><tr><th>Jump to: &nbsp; </th><td><a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-C"><b>C</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-D"><b>D</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-F"><b>F</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-G"><b>G</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-M"><b>M</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-V"><b>V</b></a>
+ &nbsp; 
+</td></tr></table>
+<table class="cp-entries-printindex" border="0">
+<tr><td></td><th class="entries-header-printindex">Index Entry</th><th class="sections-header-printindex">Section</th></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><th id="g_t_7d22_5f15_cp_letter-C">C</th></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-column_002ddisplayer"><code>column-displayer</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-column_002dformatter"><code>column-formatter</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-column_002dgetter"><code>column-getter</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><th id="g_t_7d22_5f15_cp_letter-D">D</th></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-displayer"><code>displayer</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><th id="g_t_7d22_5f15_cp_letter-F">F</th></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-formatter"><code>formatter</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><th id="g_t_7d22_5f15_cp_letter-G">G</th></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-getter"><code>getter</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><th id="g_t_7d22_5f15_cp_letter-M">M</th></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-make_002dvtable"><code>make-vtable</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><th id="g_t_7d22_5f15_cp_letter-V">V</th></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable">vtable</a></td><td class="printindex-index-section"><a href="#g_t_6982_5ff5">概念</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dbeginning_002dof_002dtable"><code>vtable-beginning-of-table</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dcolumn"><code>vtable-column</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dcurrent_002dcolumn"><code>vtable-current-column</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dcurrent_002dobject"><code>vtable-current-object</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dcurrent_002dtable"><code>vtable-current-table</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dend_002dof_002dtable"><code>vtable-end-of-table</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dgoto_002dcolumn"><code>vtable-goto-column</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dgoto_002dobject"><code>vtable-goto-object</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dgoto_002dtable"><code>vtable-goto-table</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dinsert"><code>vtable-insert</code></a></td><td class="printindex-index-section"><a href="#g_t_4f5c_8868">作表</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dinsert_002dobject"><code>vtable-insert-object</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dnarrow_002dcurrent_002dcolumn"><code>vtable-narrow-current-column</code></a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dnext_002dcolumn"><code>vtable-next-column</code></a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dprevious_002dcolumn"><code>vtable-previous-column</code></a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dremove_002dobject"><code>vtable-remove-object</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002drevert_002dcommand"><code>vtable-revert-command</code></a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dsort_002dby_002dcurrent_002dcolumn"><code>vtable-sort-by-current-column</code></a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dupdate_002dobject"><code>vtable-update-object</code></a></td><td class="printindex-index-section"><a href="#g_t_30a4_30f3_30bf_30fc_30d5_30a7_30fc_30b9_95a2_6570">インターフェース関数</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtable_002dwiden_002dcurrent_002dcolumn"><code>vtable-widen-current-column</code></a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtablenoQu-De-Zi-">vtableの取得子</a></td><td class="printindex-index-section"><a href="#g_t_6982_5ff5">概念</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtablenoMing-Ling-">vtableの命令</a></td><td class="printindex-index-section"><a href="#g_t_547d_4ee4">命令</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtablenoShu-Shi-Qi-">vtableの書式器</a></td><td class="printindex-index-section"><a href="#g_t_6982_5ff5">概念</a></td></tr>
+<tr><td></td><td class="printindex-index-entry"><a href="#index-vtablenoBiao-ShiQi-">vtableの表示器</a></td><td class="printindex-index-section"><a href="#g_t_6982_5ff5">概念</a></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+</table>
+<table class="cp-letters-footer-printindex"><tr><th>Jump to: &nbsp; </th><td><a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-C"><b>C</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-D"><b>D</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-F"><b>F</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-G"><b>G</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-M"><b>M</b></a>
+ &nbsp; 
+<a class="summary-letter-printindex" href="#g_t_7d22_5f15_cp_letter-V"><b>V</b></a>
+ &nbsp; 
+</td></tr></table>
+</div>
+
+</div>
+</div>
+
+
+
+</body>
+</html>
